@@ -1,22 +1,26 @@
 pipeline {
   agent any
+  tools{
+    "Maven 3.6.3"
+  }
+  
   stages{
-      stage("one"){
+      stage("build"){
           steps{
-              echo 'step 1'
-              sleep 3
+              echo 'compiling sysfoo'
+              sh 'mvn compile'
           }
       }
-      stage("two"){
+      stage("test"){
           steps{
-              echo 'step 2'
-              sleep 9
+              echo 'running unit tests'
+              sh 'mvn clean test'
           }
       }
-      stage("three"){
+      stage("package"){
           steps{
-              echo 'step 3'
-              sleep 5
+              echo 'generating artifacts'
+              sh 'mvn package -DskipTests'
           }
       }
   }
